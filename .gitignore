@@ -136,6 +136,7 @@ javascript/node/selenium-webdriver/.vscode/settings.json
 
 dotnet-bin
 
+target/
 /target/
 */target/**
 **/META-INF/
