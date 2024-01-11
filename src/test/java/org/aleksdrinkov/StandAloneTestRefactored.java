@@ -2,6 +2,7 @@ package org.aleksdrinkov;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.aleksdrinkov.pageobjects.LandingPage;
+import org.aleksdrinkov.pageobjects.ProductCataloguePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -23,20 +24,17 @@ public class StandAloneTestRefactored {
         WebDriverManager.chromedriver().setup();
         WebDriver driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         LandingPage landingPage = new LandingPage(driver);
         landingPage.goTo();
         landingPage.loginApplication("tozi@abv.bg", "ToziOnzi123");
 
-        List<WebElement> products = driver.findElements(By.cssSelector(".mb-3"));
+        ProductCataloguePage productCataloguePage = new ProductCataloguePage(driver);
+        List<WebElement> products = productCataloguePage.getProductList();
+        productCataloguePage.addProductToCart(productName);
 
-        WebElement prod = products.stream().filter(product ->
-                product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
-        prod.findElement(By.cssSelector(".card-body button:last-of-type")).click();
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container")));
-        wait.until(ExpectedConditions.invisibilityOf(driver.findElement(By.cssSelector(".ng-animating"))));
 
         driver.findElement(By.cssSelector("[routerlink*=cart]")).click();
 

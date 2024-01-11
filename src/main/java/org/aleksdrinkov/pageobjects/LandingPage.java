@@ -1,15 +1,18 @@
 package org.aleksdrinkov.pageobjects;
 
+import org.aleksdrinkov.abstractcomponents.AbstractComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LandingPage {
+public class LandingPage extends AbstractComponent {
 
     WebDriver driver;
 
     public LandingPage(WebDriver driver) {
+
+        super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
