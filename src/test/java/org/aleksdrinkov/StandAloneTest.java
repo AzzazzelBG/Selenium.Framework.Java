@@ -46,7 +46,7 @@ public class StandAloneTest {
 
         driver.findElement(By.cssSelector(".totalRow button")).click();
 
-        Actions action = new Actions(driver1);
+        Actions action = new Actions(driver);
         action.sendKeys(driver.findElement(By.cssSelector("[placeholder='Select Country']")), "Bulgaria").build().perform();
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".ta-results")));
         driver.findElement(By.xpath("//a[text()='Place Order ']")).click();
