@@ -12,18 +12,17 @@ import java.util.List;
 public class ProductCataloguePage extends AbstractComponent {
 
     WebDriver driver;
+    @FindBy(css = ".mb-3")
+    List<WebElement> products;
+    @FindBy(css = ".ng-animating")
+    WebElement spinner;
+
     public ProductCataloguePage(WebDriver driver) {
 
         super(driver);
         this.driver = driver;
         PageFactory.initElements(driver, this);
     }
-
-    //PageFactory
-    @FindBy(css = ".mb-3")
-    List<WebElement> products;
-    @FindBy(css = ".ng-animating")
-    WebElement spinner;
 
     By addToCart = By.cssSelector(".card-body button:last-of-type");
     By toastMessage = By.cssSelector("#toast-container");
