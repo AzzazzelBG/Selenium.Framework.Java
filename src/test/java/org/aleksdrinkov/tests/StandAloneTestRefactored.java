@@ -2,9 +2,9 @@ package org.aleksdrinkov.tests;
 
 import org.aleksdrinkov.pageobjects.CartPage;
 import org.aleksdrinkov.pageobjects.CheckoutPage;
+import org.aleksdrinkov.pageobjects.OrderPage;
 import org.aleksdrinkov.pageobjects.ProductCataloguePage;
 import org.aleksdrinkov.testcomponents.BaseTest;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -14,10 +14,10 @@ import java.util.List;
 
 public class StandAloneTestRefactored extends BaseTest {
 
+    String productName = "ADIDAS ORIGINAL";
+
     @Test
     public void submitOrder() throws IOException {
-
-        String productName = "ADIDAS ORIGINAL";
 
         landingPage.loginApplication("tozi@abv.bg", "ToziOnzi123");
 
@@ -31,11 +31,20 @@ public class StandAloneTestRefactored extends BaseTest {
         Assert.assertTrue(match);
         cartPage.goToCheckout();
 
-        driver.findElement(By.cssSelector(".totalRow button")).click();
+//        driver.findElement(By.cssSelector(".totalRow button")).click();
 
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         checkoutPage.selectCountry("Bulgaria");
 //        driver.findElement(By.xpath("//a[text()='Place Order ']")).click();
 
+    }
+
+    @Test(dependsOnMethods = {"submitOrder"})
+    public void orderHistoryTest() {
+
+        ProductCataloguePage productCataloguePage = new ProductCataloguePage(driver);
+        OrderPage orderPage = productCataloguePage.goToOrdersPage();
+
+        Assert.assertTrue(orderPage.verifyOrderDisplay(productName));
     }
 }

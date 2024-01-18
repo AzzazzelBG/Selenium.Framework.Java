@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="Error Validations TEst">
+<suite parallel="tests" name="All Test Suite">
+    <test thread-count="2" verbose="2" preserve-order="true" name="Error Validations Test">
         <classes>
             <class name="org.aleksdrinkov.tests.ErrorValidationsTest"/>
         </classes>
     </test>
-    <test name="Submit Order Test">
+    <test thread-count="2" name="Submit Order Test">
         <classes>
             <class name="org.aleksdrinkov.tests.StandAloneTestRefactored"/>
         </classes>
