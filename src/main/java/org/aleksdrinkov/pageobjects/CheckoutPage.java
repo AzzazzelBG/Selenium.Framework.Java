@@ -15,7 +15,7 @@ public class CheckoutPage extends AbstractComponent {
     WebElement country;
     @FindBy(css = ".action__submit")
     WebElement submit;
-    @FindBy(xpath = "//button[contains(@class,'ta-item')])[1]")
+    @FindBy(xpath = "//button[contains(@class,'ta-item')])[0]")
     WebElement selectBulgaria;
     By results = By.cssSelector(".ta-results");
 

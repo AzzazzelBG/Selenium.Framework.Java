@@ -1,0 +1,12 @@
+[
+  {
+    "email": "tozi@abv.bg",
+    "password": "ToziOnzi123",
+    "productName": "ADIDAS ORIGINAL"
+  },
+  {
+    "email": "ala@bala.bg",
+    "password": "aleOppa",
+    "productName": "Invalid product"
+  }
+]

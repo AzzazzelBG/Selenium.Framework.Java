@@ -7,27 +7,29 @@ import org.aleksdrinkov.pageobjects.ProductCataloguePage;
 import org.aleksdrinkov.testcomponents.BaseTest;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 public class StandAloneTestRefactored extends BaseTest {
 
-    String productName = "ADIDAS ORIGINAL";
+//    String productName = "ADIDAS ORIGINAL";
 
-    @Test
-    public void submitOrder() throws IOException {
+    @Test(dataProvider = "getData", groups = {"Purchase"})
+    public void submitOrder(HashMap<String, String> input) throws IOException {
 
-        landingPage.loginApplication("tozi@abv.bg", "ToziOnzi123");
+        landingPage.loginApplication(input.get("email"), input.get("password"));
 
         ProductCataloguePage productCataloguePage = new ProductCataloguePage(driver);
         List<WebElement> products = productCataloguePage.getProductList();
-        productCataloguePage.addProductToCart(productName);
+        productCataloguePage.addProductToCart(input.get("productName"));
         productCataloguePage.goToCartPage();
 
         CartPage cartPage = new CartPage(driver);
-        Boolean match = cartPage.verifyProductDisplay(productName);
+        Boolean match = cartPage.verifyProductDisplay(input.get("productName"));
         Assert.assertTrue(match);
         cartPage.goToCheckout();
 
@@ -39,12 +41,23 @@ public class StandAloneTestRefactored extends BaseTest {
 
     }
 
-    @Test(dependsOnMethods = {"submitOrder"})
-    public void orderHistoryTest() {
+    @Test(dependsOnMethods = {"submitOrder"}, dataProvider = "getData")
+    public void orderHistoryTest(String productName) {
 
         ProductCataloguePage productCataloguePage = new ProductCataloguePage(driver);
         OrderPage orderPage = productCataloguePage.goToOrdersPage();
 
         Assert.assertTrue(orderPage.verifyOrderDisplay(productName));
+    }
+
+    @DataProvider
+    public Object[][] getData() throws IOException {
+
+        List<HashMap<String, String>> data = getJsonDataToMap(System.getProperty("user.dir") + "\\src\\test\\java\\org\\aleksdrinkov\\data\\PurchaseOrder.json");
+
+        return new Object [][] {
+                {data.get(0)},
+                {data.get(1)}
+        };
     }
 }

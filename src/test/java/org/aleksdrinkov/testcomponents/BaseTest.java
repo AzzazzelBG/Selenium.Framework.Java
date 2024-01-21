@@ -1,7 +1,10 @@
 package org.aleksdrinkov.testcomponents;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.aleksdrinkov.pageobjects.LandingPage;
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -12,6 +15,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
 public class BaseTest {
@@ -37,7 +42,16 @@ public class BaseTest {
         return driver;
     }
 
-    @BeforeMethod
+    public List<HashMap<String, String>> getJsonDataToMap(String filePath) throws IOException {
+
+        String jsonContent = FileUtils.readFileToString(new File(filePath));
+        ObjectMapper mapper = new ObjectMapper();
+
+        return mapper.readValue(jsonContent, new TypeReference<List<HashMap<String, String>>>() {
+        });
+    }
+
+    @BeforeMethod(alwaysRun = true)
     public LandingPage launchApplication() throws IOException {
 
         WebDriver driver = initializeDriver();
@@ -47,7 +61,7 @@ public class BaseTest {
         return landingPage;
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public void tearDown() {
         driver.quit();
     }
