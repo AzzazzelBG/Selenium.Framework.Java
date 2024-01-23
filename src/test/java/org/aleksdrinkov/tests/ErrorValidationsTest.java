@@ -3,6 +3,7 @@ package org.aleksdrinkov.tests;
 import org.aleksdrinkov.pageobjects.CartPage;
 import org.aleksdrinkov.pageobjects.ProductCataloguePage;
 import org.aleksdrinkov.testcomponents.BaseTest;
+import org.aleksdrinkov.testcomponents.Retry;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,7 +13,8 @@ import java.util.List;
 
 public class ErrorValidationsTest extends BaseTest {
 
-    @Test
+    //add attribute to retry a flaky test
+    @Test(retryAnalyzer = Retry.class)
     public void loginErrorValidation() throws IOException {
 
         String productName = "ADIDAS ORIGINAL";
