@@ -29,7 +29,7 @@ public class BaseTest {
 
         // If you want to use several browserst use these properties
         Properties prop = new Properties();
-        FileInputStream fis = new FileInputStream(new File("E:\\Programming\\Selenium.Framework.Java\\src\\main\\java\\org\\aleksdrinkov\\resources\\globaldata.properties"));
+        FileInputStream fis = new FileInputStream(new File( System.getProperty("user.dir") + "\\src\\main\\java\\org\\aleksdrinkov\\resources\\globaldata.properties"));
         prop.load(fis);
         String browserName = prop.getProperty("browser");
 
