@@ -33,11 +33,8 @@ public class StandAloneTestRefactored extends BaseTest {
         Assert.assertTrue(match);
         cartPage.goToCheckout();
 
-//        driver.findElement(By.cssSelector(".totalRow button")).click();
-
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         checkoutPage.selectCountry("Bulgaria");
-//        driver.findElement(By.xpath("//a[text()='Place Order ']")).click();
 
     }
 
