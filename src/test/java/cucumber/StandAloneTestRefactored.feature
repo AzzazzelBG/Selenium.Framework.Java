@@ -1,8 +1,10 @@
+@tag
 Feature: Purchase the order from E-commerce website
 
   Background:
     Given I landed on E-commerce page
 
+  @tag2
   Scenario Outline: Positive test of submitting the order
     Given Logged in with username <name> and password <password>
     When I add product <productName> from Cart
